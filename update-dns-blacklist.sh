@@ -30,6 +30,7 @@ run_scraper() {
     cleanup
     exit 0
   else
+    backup_blacklist
 	  cp ${NEW_BLACKLIST} ${WORKING}
   fi
 }
@@ -47,8 +48,6 @@ SCRAPER=${HOME}/scraping-bad-dns.py
 NEW_BLACKLIST=/etc/bind/named.conf.block.new    # hardcoded in scraper
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 LOGFILE=/var/log/update-dns-blacklist.log
-
-backup_blacklist
 
 run_scraper
 
