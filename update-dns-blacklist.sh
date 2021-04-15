@@ -40,9 +40,10 @@ cleanup() {
 
 ### MAIN ###
 
+HOME=/home/allen.zechini/projects/update-dns-blacklist
 WORKING=/etc/bind/named.conf.block
 WORKING_BACKUP=/etc/bind/named.conf.block.working_backup
-SCRAPER=/home/allen.zechini/scraping-bad-dns.py # should update to point to a github location/clone
+SCRAPER=${HOME}/scraping-bad-dns.py
 NEW_BLACKLIST=/etc/bind/named.conf.block.new    # hardcoded in scraper
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 LOGFILE=/var/log/update-dns-blacklist.log
