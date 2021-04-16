@@ -1,19 +1,38 @@
-import smtplib, ssl
+import csv, getpass, smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
-port = 465  # For SSL
-password = ""
+# Email variables
+password = getpass.getpass("Please enter your email account password: ")
+sender_email = "allen@shotover.com"
+message = MIMEMultipart("alternative")
+message["Subject"] = "DNS Blacklist Updated"
+message["From"] = sender_email
 
-sender_email = "alerts@shotover.com"
-receiver_email = "allen@shotover.com, logan@shotover.com"
-message = """\
-    Subject: Hi there
-
-    This message is sent from Python.
+text = """\
+    Hello,
+    
+    The DNS blacklist has been updated. See attached for details (but not just yet).
+    
+    Sincerely,
+    
+    Mr. Roboto
     """
 
-# Create a secure SSL context
-context = ssl.create_default_context()
+# Construct MIMEMultipart message
+part1 = MIMEText(text, "plain")
+message.attach(part1)
 
-with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-    server.login("alerts@shotover.com", password)
-    server.sendmail(sender_email, receiver_email, message)
+# Create a secure SSL context and connect
+context = ssl.create_default_context()
+with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+    server.login("allen@shotover.com", password)
+    with open("dns_alertees.csv") as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip header row
+        for name, email in reader:
+            server.sendmail(
+                sender_email,
+                email,
+                message.as_string(),
+            )
