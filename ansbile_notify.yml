@@ -4,8 +4,10 @@
   tasks:
   - name: Notify accounts of an update
     mail:
-      host: smtp.gmail.com
-      port: 587
+      # host: smtp.gmail.com
+      # port: 587
+      host: localhost
+      port: 25
       # username: allen@shotover.com
       # password: "{{ p }}"
       from: alerts@shotover.com
@@ -19,4 +21,5 @@
         Sincerely,
         
         Mr. Roboto'
+      secure: always
     delegate_to: localhost
