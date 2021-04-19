@@ -1,9 +1,10 @@
-import csv, getpass, smtplib, ssl
+import os, csv, smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 # Email variables
-password = getpass.getpass("Please enter your email account password: ")
+# password = getpass.getpass("Please enter your email account password: ")
+password = os.environ.get('SMTP_PASSWORD')
 sender_email = "allen@shotover.com"
 message = MIMEMultipart("alternative")
 message["Subject"] = "DNS Blacklist Updated"

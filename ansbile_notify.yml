@@ -4,12 +4,12 @@
   tasks:
   - name: Notify accounts of an update
     mail:
-      # host: smtp.gmail.com
-      # port: 587
-      host: localhost
-      port: 25
-      # username: allen@shotover.com
-      # password: "{{ p }}"
+      host: smtp.gmail.com
+      port: 587
+      # host: localhost
+      # port: 25
+      username: allen@shotover.com
+      password: "{{ lookup('env', 'SMTP_PASSWORD') }}"
       from: alerts@shotover.com
       to: dns@shotover.com, alerts@shotover.com, allen@shotover.com
       subject: DNS Blacklist Updated
