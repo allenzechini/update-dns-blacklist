@@ -37,3 +37,4 @@ with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
                 email,
                 message.as_string(),
             )
+    file.close()
