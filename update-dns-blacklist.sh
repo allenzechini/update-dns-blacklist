@@ -38,8 +38,6 @@ notify() {
   python3 ${NOTIFY}
 }
 
-### MAIN ###
-
 # bind vars
 BIND_HOME=/etc/bind
 WORKING=${BIND_HOME}/named.conf.block
@@ -54,6 +52,9 @@ NOTIFY=${PROJECT_HOME}/notify.py
 # Other vars
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 LOGFILE=/var/log/update-dns-blacklist.log
+USERENV=/home/allen.zechini/.bash_profile
+
+### MAIN ###
 
 run_scraper
 
@@ -63,6 +64,7 @@ if [ $? != 0 ]; then
 	restore_blacklist
 	systemctl restart bind9
 else
+  . ${USERENV} > /dev/null 2>&1
   notify
   echo "${TIMESTAMP}: Blacklist updated successfully" >> ${LOGFILE}
 fi

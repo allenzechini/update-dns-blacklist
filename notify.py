@@ -5,6 +5,7 @@ from email.mime.multipart import MIMEMultipart
 # Email variables
 username = os.environ.get('SMTP_USERNAME')
 password = os.environ.get('SMTP_PASSWORD')
+receivers = os.environ.get('SMTP_RECEIVERS')
 message = MIMEMultipart("alternative")
 message["Subject"] = "DNS Blacklist Updated"
 message["From"] = username
@@ -27,7 +28,7 @@ message.attach(part1)
 context = ssl.create_default_context()
 with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
     server.login(username, password)
-    with open("dns_alertees.csv") as file:
+    with open(receivers) as file:
         reader = csv.reader(file)
         next(reader)  # Skip header row
         for name, email in reader:
