@@ -3,11 +3,11 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 # Email variables
+username = os.environ.get('SMTP_USERNAME')
 password = os.environ.get('SMTP_PASSWORD')
-sender_email = "allen@shotover.com"
 message = MIMEMultipart("alternative")
 message["Subject"] = "DNS Blacklist Updated"
-message["From"] = sender_email
+message["From"] = username
 
 text = """\
     Hello,
@@ -26,13 +26,13 @@ message.attach(part1)
 # Create a secure SSL context and connect
 context = ssl.create_default_context()
 with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-    server.login("allen@shotover.com", password)
+    server.login(username, password)
     with open("dns_alertees.csv") as file:
         reader = csv.reader(file)
         next(reader)  # Skip header row
         for name, email in reader:
             server.sendmail(
-                sender_email,
+                username,
                 email,
                 message.as_string(),
             )
