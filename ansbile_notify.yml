@@ -1,17 +1,15 @@
 ---
 - hosts: localhost
-  # vars_files: secret.yml
   tasks:
   - name: Notify accounts of an update
     mail:
       host: smtp.gmail.com
       port: 587
-      # host: localhost
-      # port: 25
-      username: allen@shotover.com
+      username: "{{ lookup('env', 'SMTP_USERNAME') }}"
       password: "{{ lookup('env', 'SMTP_PASSWORD') }}"
-      from: alerts@shotover.com
-      to: dns@shotover.com, alerts@shotover.com, allen@shotover.com
+      from: allen@shotover.com
+      # to: dns@shotover.com, alerts@shotover.com, allen@shotover.com
+      to: allen@shotover.com
       subject: DNS Blacklist Updated
       body: 
         'Hello,
@@ -21,5 +19,4 @@
         Sincerely,
         
         Mr. Roboto'
-      # secure: always
     delegate_to: localhost
