@@ -17,7 +17,7 @@ restore_blacklist() {
 }
 
 run_scraper() {
-	python3 ${SCRAPER}
+	python3 ${SCRAPER} > /dev/null 2>&1
 
   diff ${WORKING} ${NEW_BLACKLIST}
   if [ $? = 0 ]; then
