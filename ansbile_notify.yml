@@ -1,5 +1,6 @@
 ---
-- hosts: localhost
+- name: Auto-notify users of a DNS blacklist update
+  hosts: dns
   tasks:
   - name: Notify accounts of an update
     mail:
@@ -19,5 +20,3 @@
         Sincerely,
         
         Mr. Roboto'
-    delegate_to: localhost
-    # Testing something
