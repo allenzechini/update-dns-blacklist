@@ -2,6 +2,15 @@ import argparse
 import difflib
 
 def do_diff(file1='', file2=''):
+#   lines1 = ''
+#   with open(file1) as f1:
+#     for line in f1:
+#       lines1 = lines1 + line
+# 
+#   lines2 = ''
+#   with open(file2) as f2:
+#     for line in f2:
+#       lines2 = lines2 + line
   f1 = open(file1)
   f2 = open(file2)
   lines1 = f1.readlines()
@@ -13,7 +22,7 @@ def do_diff(file1='', file2=''):
                                       file1, file2,
                                       context=True, numlines=10)
 
-  my_diff = "/tmp/named.conf.block.htmldiff"
+  my_diff = "/tmp/named.conf.block.diff.html"
   with open(my_diff, 'w') as output:
     output.write(diff)
   output.close()

@@ -17,12 +17,7 @@ restore_blacklist() {
 }
 
 cleanup() {
-	rm ${NEW_BLACKLIST} ${HTMLDIFF}
-	# rm ${HTMLDIFF_ZIP}
-}
-
-create_diff() {
-  python3 ${HTML_DIFF} -f1 ${WORKING} -f2 ${NEW_BLACKLIST}
+	rm ${NEW_BLACKLIST}
 }
 
 notify() {
@@ -40,7 +35,6 @@ run_scraper() {
     exit 0
   else
     backup_blacklist
-    create_diff
 	  cp ${NEW_BLACKLIST} ${WORKING}
   fi
 }
@@ -61,8 +55,6 @@ NOTIFY=${PROJECT_HOME}/notify.py
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 LOGFILE=/var/log/update-dns-blacklist.log
 USERENV=/home/azechini/.bash_profile
-HTMLDIFF=/tmp/named.conf.block.htmldiff
-# HTMLDIFF_ZIP=/tmp/named.conf.block.htmldiff.zip
 
 ### MAIN ###
 
@@ -76,7 +68,8 @@ if [ $? != 0 ]; then
 else
   . ${USERENV} > /dev/null 2>&1
   notify
-  echo "${TIMESTAMP}: Blacklist updated successfully" >> ${LOGFILE}
+  NUM=$(diff -y --suppress-common-lines ${WORKING} ${WORKING_BACKUP} | wc -l)
+  echo "${TIMESTAMP}: Blacklist updated successfully (${NUM} changes)" >> ${LOGFILE}
 fi
 
 cleanup
