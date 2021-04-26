@@ -10,7 +10,7 @@ from email.mime.multipart import MIMEMultipart
 working = '/etc/bind/named.conf.block'
 new_bl = '/etc/bind/named.conf.block.new'
 #num = os.system('diff -y --suppress-common-lines /etc/bind/named.conf.block.working_backup /etc/bind/named.conf.block | wc -l')
-stream = os.popen('diff -y --suppress-common-lines /etc/bind/named.conf.block.working_backup /etc/bind/named.conf.block | wc -l')
+stream = os.popen('diff -y --suppress-common-lines /etc/bind/named.conf.block. /etc/bind/named.conf.block.working_backup | wc -l')
 num = stream.read().strip()
 
 # Email variables
