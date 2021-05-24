@@ -60,7 +60,7 @@ USERENV=/home/azechini/.bash_profile
 
 run_scraper
 
-systemctl restart bind9
+sudo systemctl restart bind9
 if [ $? != 0 ]; then
   echo "${TIMESTAMP}: New blacklist caused bind9 to fail...reverting blacklist" >> ${LOGFILE}
 	restore_blacklist
